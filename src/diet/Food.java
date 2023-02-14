@@ -5,9 +5,13 @@ import java.util.*;
 public class Food {
 
     Set<NutritionalElement> rawMaterialSet = new TreeSet<>(new sortByNameComparator());
+    Map<String, NutritionalElement> rawMaterialMap = new HashMap<>();
+    Map<String, NutritionalElement> productsMap = new HashMap<>();
     Set<NutritionalElement> productList = new TreeSet<>(new sortByNameComparator());
 
     List<NutritionalElement> recipeList = new ArrayList<>();
+    Set<NutritionalElement> recipeListSet = new TreeSet<>();
+    Map<String, NutritionalElement> menuMap = new HashMap<>();
     Set<NutritionalElement> menuList = new TreeSet<>(new sortByNameComparator());
 
     public Food() {
@@ -20,6 +24,7 @@ public class Food {
                                   double fat) {
         RawMaterial rawMaterial = new RawMaterial(name, calories, proteins, carbs, fat);
         rawMaterialSet.add(rawMaterial);
+        rawMaterialMap.put(name, rawMaterial);
 
     }
 
@@ -29,9 +34,12 @@ public class Food {
 
 
     public NutritionalElement getRawMaterial(String name) {
-        for (NutritionalElement rawMaterial : rawMaterialSet) {
-            if (rawMaterial.getName() == name) return rawMaterial;
+        if (rawMaterialMap != null && rawMaterialMap.size() > 0) {
+            for (NutritionalElement rawMaterial : rawMaterialSet) {
+                if (rawMaterial.getName().equals(name)) return rawMaterial;
+            }
         }
+
         return null;
     }
 
@@ -53,7 +61,7 @@ public class Food {
 
     public NutritionalElement getProduct(String name) {
         for (NutritionalElement element : productList) {
-            if (element.getName() == name) {
+            if (element.getName().equals(name)) {
                 return element;
             }
         }
@@ -63,6 +71,7 @@ public class Food {
     public Recipe createRecipe(String name) {
         Recipe recipe = new Recipe(name);
         recipeList.add(recipe);
+        recipeListSet.add(recipe);
         return recipe;
     }
 
@@ -73,7 +82,7 @@ public class Food {
 
     public NutritionalElement getRecipe(String name) {
         for (NutritionalElement element : recipeList) {
-            if (element.getName() == name) {
+            if (element.getName().equals(name)) {
                 return element;
             }
         }

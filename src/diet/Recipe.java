@@ -1,75 +1,76 @@
 package diet;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Recipe implements NutritionalElement {
-	private String name;
-	private double calories;
-	private double proteins;
-	private double carbs;
-	private double fat;
-	private Food food;
-	private Map<NutritionalElement, Double> ingredients = new HashMap<>();
+    private String recipeName;
+    private Food food;
+    private Map<String, Double> ingredients = new HashMap<>();
 
 
-	public Recipe(String name, Food food) {
-		this.name = name;
-		this.food = food;
-	}
-
-	public Recipe(String name, double calories, double proteins, double carbs, double fat) {
-		this.name = name;
-		this.calories = calories;
-		this.proteins = proteins;
-		this.carbs = carbs;
-		this.fat = fat;
-	}
-
-	public Recipe(String name) {
-		this.name = name;
-	}
-
-	public Recipe	 addIngredient(String material, double quantity) {
-
-		for (NutritionalElement rawMaterial : food.rawMaterialSet) {
-			if (rawMaterial.getName()==material){
-				ingredients.put(rawMaterial, quantity);
-			}
-		}
-		return this;
-	}
-
-	@Override
-	public String getName() {
-		return name;
-	}
-
-	@Override
-	public double getCalories() {
-		return calories;
-	}
-
-	@Override
-	public double getProteins() {
-		return proteins;
-	}
-
-	@Override
-	public double getCarbs() {
-		return carbs;
-	}
-
-	@Override
-	public double getFat() {
-		return fat;
-	}
+    public Recipe(String name, Food food) {
+        this.recipeName = name;
+        this.food = food;
+    }
 
 
-	@Override
-	public boolean per100g() {
+    public Recipe(String name) {
+        this.recipeName = name;
+    }
 
-		return true;
-	}
+    public Recipe addIngredient(String material, double quantity) {
+        if (food.rawMaterialMap.get(material) != null) {
+            ingredients.put(material, quantity);
+        }
+        return this;
+    }
+
+    @Override
+    public String getName() {
+        return recipeName;
+    }
+
+    @Override
+    public double getCalories() {
+
+        double totalRecipeCalories = 0;
+        Map<String, NutritionalElement> rawMaterialMap = food.rawMaterialMap;
+        for (String name : ingredients.keySet()) {
+            NutritionalElement nutritionalElement = rawMaterialMap.get(name);
+            double elementTotalCalory = nutritionalElement.getCalories();
+            double percentage = ingredients.get(name);
+            double calory = (elementTotalCalory * percentage) / 100;
+            totalRecipeCalories += calory;
+        }
+        return totalRecipeCalories;
+    }
+
+    @Override
+    public double getProteins() {
+        double totalRecipeProteins=0; // to be continued
+        return totalRecipeProteins;
+    }
+
+    @Override
+    public double getCarbs() {
+        double totalRecipeCarbs = 0;   // to be continued
+        return totalRecipeCarbs;
+    }
+
+    @Override
+    public double getFat() {
+        double totalRecipeFat = 0;   // to be continued
+        return totalRecipeFat;
+    }
+
+
+    @Override
+    public boolean per100g() {
+
+        return true;
+    }
 
 }
