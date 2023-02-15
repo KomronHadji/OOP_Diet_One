@@ -51,13 +51,31 @@ public class Recipe implements NutritionalElement {
 
     @Override
     public double getProteins() {
-        double totalRecipeProteins=0; // to be continued
+        double totalRecipeProteins=0;
+        Map<String, NutritionalElement> rawMaterialMap = food.rawMaterialMap;
+        for (String name: ingredients.keySet()) {
+            NutritionalElement nutritionalElement = rawMaterialMap.get(name);
+            double elementTotalProtein = nutritionalElement.getProteins();
+            double quantity = ingredients.get(name);
+            double protein = (elementTotalProtein*quantity)/100;
+            totalRecipeProteins +=protein;
+
+        }
         return totalRecipeProteins;
     }
 
     @Override
     public double getCarbs() {
-        double totalRecipeCarbs = 0;   // to be continued
+        double totalRecipeCarbs = 0;
+        Map<String, NutritionalElement> rawMaterialMap = food.rawMaterialMap;
+        for (String s : ingredients.keySet()) {
+            NutritionalElement nutritionalElement = rawMaterialMap.get(s);
+            double elementTotalCarbs = nutritionalElement.getCarbs();
+            double quantity = ingredients.get(s);
+            double carb = (elementTotalCarbs*quantity)/100;
+            totalRecipeCarbs+=carb;
+
+        }
         return totalRecipeCarbs;
     }
 
