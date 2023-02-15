@@ -81,7 +81,16 @@ public class Recipe implements NutritionalElement {
 
     @Override
     public double getFat() {
-        double totalRecipeFat = 0;   // to be continued
+        double totalRecipeFat = 0;
+        Map<String, NutritionalElement> rawMaterialMap = food.rawMaterialMap;
+        for (String s : ingredients.keySet()) {
+            NutritionalElement nutritionalElement = rawMaterialMap.get(s);
+            double elementTotalFat = nutritionalElement.getFat();
+            double quantity = ingredients.get(s);
+            double fat =(elementTotalFat*quantity)/100;
+            totalRecipeFat+=fat;
+        }
+
         return totalRecipeFat;
     }
 

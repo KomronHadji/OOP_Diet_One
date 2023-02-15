@@ -112,7 +112,20 @@ public class Menu implements NutritionalElement {
 
     @Override
     public double getFat() {
-        double totalMenuFat = 0;  //to be continued
+        double totalProductFat = 0;
+        double totalRecipeFat = 0;
+        for (NutritionalElement menuProduct : menuProducts) {
+            totalProductFat  = menuProduct.getCarbs();
+        }
+        for (String s : recipesMap.keySet()) {
+            NutritionalElement nutritionalElement = recipesMap.get(s);
+            double RecipeFat = nutritionalElement.getFat();
+            double quantity = menuRecipes.get(s);
+            totalRecipeFat = (RecipeFat * quantity) / 100;
+        }
+
+        double totalMenuFat = totalProductFat + totalRecipeFat;
+
         return totalMenuFat;
     }
 
