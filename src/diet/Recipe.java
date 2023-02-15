@@ -14,6 +14,7 @@ public class Recipe implements NutritionalElement {
     public Recipe(String name, Food food) {
         this.recipeName = name;
         this.food = food;
+        food.recipeList.add(this);
     }
 
 
