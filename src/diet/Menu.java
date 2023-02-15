@@ -56,7 +56,7 @@ public class Menu implements NutritionalElement {
 //            Set<NutritionalElement> product = food.productList;
             productCalories = menuProduct.getCalories();
         }
-        Map<String, NutritionalElement> recipes = recipesMap;
+//        Map<String, NutritionalElement> recipes = recipesMap;
         for (String name : menuRecipes.keySet()) {
             NutritionalElement nutritionalElement = recipesMap.get(name);
             double recipeCalory = nutritionalElement.getCalories();
@@ -64,8 +64,6 @@ public class Menu implements NutritionalElement {
             totalRecipeCalories = (recipeCalory * quantity) / 100;
 
         }
-
-
         double totalMenuCalories = productCalories + totalRecipeCalories;
         return totalMenuCalories;
     }
@@ -73,7 +71,21 @@ public class Menu implements NutritionalElement {
 
     @Override
     public double getProteins() {
-        double totalMenuProteins = 0;  //to be continued
+        double totalProductProteins = 0;
+        double totalRecipeProteins = 0;
+        for (NutritionalElement menuProduct : menuProducts) {
+            totalProductProteins = menuProduct.getProteins();
+        }
+        for (String name : recipesMap.keySet()) {
+            NutritionalElement nutritionalElement = recipesMap.get(name);
+            double totalProtein = nutritionalElement.getProteins();
+            double quantity = menuRecipes.get(name);
+            totalRecipeProteins = (totalProtein * quantity) / 100;
+        }
+
+
+        double totalMenuProteins = totalProductProteins + totalRecipeProteins;
+
         return totalMenuProteins;
     }
 
